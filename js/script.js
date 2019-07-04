@@ -3,9 +3,15 @@
     var drawn;
     var drawnID = "";
     var sequanceOfDrawn = [1];
+    var sequanceOfResult = [];
     var manPoints = 0;
     var iaPoints = 0;
+    var manWon = 0;
+    var iaWon = 0;
     var deuce = 0;
+    var manWonSeries = 0;
+    var iaWonSeries = 0;
+    var deuceSeries = 0;
 
     function resolveAfter1Seconds(x) {
         return new Promise(resolve => {
@@ -29,10 +35,6 @@
         } else {
             drawnID = "s_ia";
         };
-        console.log('draw ' + draw);
-        console.log(drawn);
-        console.log(sequanceOfDrawn.length);
-
 
         if (document.querySelector(`#${drawnID}`).classList.contains('hover_simulation')) {
             document.getElementById(drawnID).classList.remove('hover_simulation')
@@ -61,21 +63,21 @@
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/rr.jpg";
-                deuce = 1;
+                sequanceOfResult.push('deuce');
                 break;
 
             case manChoice == 2 && drawn == 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/pp.jpg";
-                deuce = 1;
+                sequanceOfResult.push('deuce');
                 break;
 
             case manChoice == 3 && drawn == 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/ss.jpg";
-                deuce = 1;
+                sequanceOfResult.push('deuce');
                 break;
 
             case manChoice == 1 && drawn == 2:
@@ -83,6 +85,7 @@
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/rp.jpg";
                 iaPoints++
+                sequanceOfResult.push('ia');
                 break;
 
             case manChoice == 1 && drawn == 3:
@@ -90,6 +93,7 @@
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/rs.jpg";
                 manPoints++
+                sequanceOfResult.push('man');
                 break;
 
             case manChoice == 2 && drawn == 1:
@@ -97,6 +101,7 @@
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/pr.jpg";
                 manPoints++
+                sequanceOfResult.push('man');
                 break;
 
             case manChoice == 2 && drawn == 3:
@@ -104,6 +109,7 @@
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/ps.jpg";
                 iaPoints++
+                sequanceOfResult.push('ia');
                 break;
 
             case manChoice == 3 && drawn == 1:
@@ -111,6 +117,7 @@
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/sr.jpg";
                 iaPoints++
+                sequanceOfResult.push('ia');
                 break;
 
             case manChoice == 3 && drawn == 2:
@@ -118,16 +125,54 @@
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/sp.jpg";
                 manPoints++
+                sequanceOfResult.push('man');
                 break;
         }
 
-        var pointPoints;
-        if (iaPoints > 1 || manPoints > 1) {
-            pointPoints = 'Points';
-        } else { pointPoints = 'Point' };
+        var manPointPoints;
+        if (manPoints > 1) {
+            manPointPoints = 'Points';
+        } else { manPointPoints = 'Point' };
 
-        document.getElementById('manScore').innerHTML = `You:${manPoints} ${pointPoints}`;
-        document.getElementById('iaScore').innerHTML = `You:${iaPoints} ${pointPoints}`;
+        var iaPointPoints;
+        if (iaPoints > 1) {
+            iaPointPoints = 'Points';
+        } else { iaPointPoints = 'Point' };
+
+
+        for (let i = 0; i <= sequanceOfResult.length; i++) {
+            if (i < sequanceOfResult.length) {
+
+                if (sequanceOfResult[i] == 'man') {
+                    manWon++;
+                    if (manWon > manWonSeries) { manWonSeries = manWon; }
+                } else { manWon = 0; }
+
+                if (sequanceOfResult[i] == 'ia') {
+                    iaWon++;
+                    if (iaWon > iaWonSeries) { iaWonSeries = iaWon; }
+                } else { iaWon = 0; }
+
+                if (sequanceOfResult[i] == 'deuce') {
+                    deuce++;
+                    if (deuce > deuceSeries) { deuceSeries = deuce; }
+                } else { deuce = 0; }
+            } else {
+                manWon = 0;
+                iaWon = 0;
+                deuce = 0;
+            }
+        };
+
+        document.getElementById('manWonSeries').innerHTML = `Najdłuższa seria Twoich wygranych to: ${manWonSeries}`;
+        document.getElementById('iaWonSeries').innerHTML = `Najdłuższa seria wygranych AI to: ${iaWonSeries}`;
+        document.getElementById('deuceSeries').innerHTML = `Najdłuższa seria remisów to: ${deuceSeries}`;
+
+        document.getElementById('manScore').innerHTML = `You:${manPoints} ${manPointPoints}`;
+        document.getElementById('iaScore').innerHTML = `Computer:${iaPoints} ${iaPointPoints}`;
+
+        console.log(sequanceOfResult.length);
+        console.log(sequanceOfResult);
     }
 
     document.getElementById('r_man').addEventListener('click', function () {
