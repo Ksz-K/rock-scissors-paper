@@ -1,4 +1,5 @@
 (function () {
+    var playNumber = 1;
     var draw;
     var drawn;
     var drawnID = "";
@@ -12,6 +13,16 @@
     var manWonSeries = 0;
     var iaWonSeries = 0;
     var deuceSeries = 0;
+    var takeCare = "Brawo. U won !";
+
+
+    var maxPlays = parseFloat(window.prompt("Czy chesz ustalić maksymalną ilość rozgrywek ? \nJeśli tak wpisz ją - jeśli nie wpisz cokolwiek bądź kliknij anuluj."));
+
+    if (!isNaN(maxPlays)) {
+        maxPlayToGame = maxPlays;
+    } else {
+        maxPlayToGame = 999999;
+    }
 
     function resolveAfter1Seconds(x) {
         return new Promise(resolve => {
@@ -55,6 +66,50 @@
         } else {
             document.getElementById(drawnID).classList.add('choosen')
         }
+    }
+    function setupBoardgameInfo() {
+
+        var manPointPoints;
+        if (manPoints > 1) {
+            manPointPoints = 'Points';
+        } else { manPointPoints = 'Point' };
+
+        var iaPointPoints;
+        if (iaPoints > 1) {
+            iaPointPoints = 'Points';
+        } else { iaPointPoints = 'Point' };
+
+
+        for (let i = 0; i <= sequanceOfResult.length; i++) {
+            if (i < sequanceOfResult.length) {
+
+                if (sequanceOfResult[i] == 'man') {
+                    manWon++;
+                    if (manWon > manWonSeries) { manWonSeries = manWon; }
+                } else { manWon = 0; }
+
+                if (sequanceOfResult[i] == 'ia') {
+                    iaWon++;
+                    if (iaWon > iaWonSeries) { iaWonSeries = iaWon; }
+                } else { iaWon = 0; }
+
+                if (sequanceOfResult[i] == 'deuce') {
+                    deuce++;
+                    if (deuce > deuceSeries) { deuceSeries = deuce; }
+                } else { deuce = 0; }
+            } else {
+                manWon = 0;
+                iaWon = 0;
+                deuce = 0;
+            }
+        };
+
+        document.getElementById('manWonSeries').innerHTML = `Najdłuższa seria Twoich wygranych to: ${manWonSeries}`;
+        document.getElementById('iaWonSeries').innerHTML = `Najdłuższa seria wygranych AI to: ${iaWonSeries}`;
+        document.getElementById('deuceSeries').innerHTML = `Najdłuższa seria remisów to: ${deuceSeries}`;
+
+        document.getElementById('manScore').innerHTML = `You:${manPoints} ${manPointPoints}`;
+        document.getElementById('iaScore').innerHTML = `Computer:${iaPoints} ${iaPointPoints}`;
     }
 
     function whoWin(manChoice) {
@@ -129,50 +184,8 @@
                 break;
         }
 
-        var manPointPoints;
-        if (manPoints > 1) {
-            manPointPoints = 'Points';
-        } else { manPointPoints = 'Point' };
+        setupBoardgameInfo();
 
-        var iaPointPoints;
-        if (iaPoints > 1) {
-            iaPointPoints = 'Points';
-        } else { iaPointPoints = 'Point' };
-
-
-        for (let i = 0; i <= sequanceOfResult.length; i++) {
-            if (i < sequanceOfResult.length) {
-
-                if (sequanceOfResult[i] == 'man') {
-                    manWon++;
-                    if (manWon > manWonSeries) { manWonSeries = manWon; }
-                } else { manWon = 0; }
-
-                if (sequanceOfResult[i] == 'ia') {
-                    iaWon++;
-                    if (iaWon > iaWonSeries) { iaWonSeries = iaWon; }
-                } else { iaWon = 0; }
-
-                if (sequanceOfResult[i] == 'deuce') {
-                    deuce++;
-                    if (deuce > deuceSeries) { deuceSeries = deuce; }
-                } else { deuce = 0; }
-            } else {
-                manWon = 0;
-                iaWon = 0;
-                deuce = 0;
-            }
-        };
-
-        document.getElementById('manWonSeries').innerHTML = `Najdłuższa seria Twoich wygranych to: ${manWonSeries}`;
-        document.getElementById('iaWonSeries').innerHTML = `Najdłuższa seria wygranych AI to: ${iaWonSeries}`;
-        document.getElementById('deuceSeries').innerHTML = `Najdłuższa seria remisów to: ${deuceSeries}`;
-
-        document.getElementById('manScore').innerHTML = `You:${manPoints} ${manPointPoints}`;
-        document.getElementById('iaScore').innerHTML = `Computer:${iaPoints} ${iaPointPoints}`;
-
-        console.log(sequanceOfResult.length);
-        console.log(sequanceOfResult);
     }
 
     document.getElementById('r_man').addEventListener('click', function () {
@@ -190,15 +203,22 @@
     });
 
     document.getElementById('continue').addEventListener('click', function () {
+        playNumber++;
+        if (playNumber > maxPlayToGame) {
+            if (manPoints <= iaPoints) { takeCare = "Następnym razem będzie lepiej :)" }
+            gameEnd();
+        }
+        document.getElementById('playNumber').innerHTML = `Rozgrywka numer: ${playNumber}`;
         document.getElementById(drawnID).classList.remove('choosen');
         document.getElementById('winnerInfo').innerHTML = "Rozgrywka w toku";
-
-
         startHoverSimulation = setInterval(simulateHover, 1100);
         simulateHover();
     });
 
-
+    function gameEnd() {
+        window.alert("Rozgrywka dobiegła końca. Rezegrano " + maxPlayToGame + " rund." + "\nTwój wynik wynosi " + manPoints + "\nWynik komputera to " + iaPoints + "\n" + takeCare);
+        location.reload();
+    }
 
 
 })();
