@@ -75,6 +75,26 @@ body {
   z-index: 100;
 }
 
+.buttons {
+  margin-top: 2.5rem;
+  width: 95%;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #ffffff;
+  background: #912c22;
+  text-shadow: 0 0 10px #ffffff;
+  border: 2px solid #000;
+  border-radius: 7%;
+}
+
+.buttons:hover {
+  cursor: pointer;
+  border: 3px solid #000;
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  z-index: 100;
+}
+
 [class*="col-"] {
   min-height: 1px;
   padding: 0 10px;
