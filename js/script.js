@@ -203,12 +203,18 @@
         document.getElementById('r_man').addEventListener('click', r_man);
         document.getElementById('p_man').addEventListener('click', p_man);
         document.getElementById('s_man').addEventListener('click', s_man);
+        document.getElementById('r_man').classList.add('manCard');
+        document.getElementById('p_man').classList.add('manCard');
+        document.getElementById('s_man').classList.add('manCard');
     }
 
     function silentPlayCards() {
         document.getElementById('r_man').removeEventListener('click', r_man);
         document.getElementById('p_man').removeEventListener('click', p_man);
         document.getElementById('s_man').removeEventListener('click', s_man);
+        document.getElementById('r_man').classList.remove('manCard');
+        document.getElementById('p_man').classList.remove('manCard');
+        document.getElementById('s_man').classList.remove('manCard');
     }
 
     document.getElementById('reStart').addEventListener('click', function () {
