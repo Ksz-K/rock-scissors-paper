@@ -3,6 +3,9 @@
     var drawn;
     var drawnID = "";
     var sequanceOfDrawn = [1];
+    var manPoints = 0;
+    var iaPoints = 0;
+    var deuce = 0;
 
     function resolveAfter1Seconds(x) {
         return new Promise(resolve => {
@@ -58,56 +61,73 @@
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/rr.jpg";
+                deuce = 1;
                 break;
 
             case manChoice == 2 && drawn == 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/pp.jpg";
+                deuce = 1;
                 break;
 
             case manChoice == 3 && drawn == 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/ss.jpg";
+                deuce = 1;
                 break;
 
             case manChoice == 1 && drawn == 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/rp.jpg";
+                iaPoints++
                 break;
 
             case manChoice == 1 && drawn == 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/rs.jpg";
+                manPoints++
                 break;
 
             case manChoice == 2 && drawn == 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/pr.jpg";
+                manPoints++
                 break;
 
             case manChoice == 2 && drawn == 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/ps.jpg";
+                iaPoints++
                 break;
 
             case manChoice == 3 && drawn == 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/sr.jpg";
+                iaPoints++
                 break;
 
             case manChoice == 3 && drawn == 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/sp.jpg";
+                manPoints++
                 break;
         }
+
+        var pointPoints;
+        if (iaPoints > 1 || manPoints > 1) {
+            pointPoints = 'Points';
+        } else { pointPoints = 'Point' };
+
+        document.getElementById('manScore').innerHTML = `You:${manPoints} ${pointPoints}`;
+        document.getElementById('iaScore').innerHTML = `You:${iaPoints} ${pointPoints}`;
     }
 
     document.getElementById('r_man').addEventListener('click', function () {
@@ -126,8 +146,14 @@
 
     document.getElementById('continue').addEventListener('click', function () {
         document.getElementById(drawnID).classList.remove('choosen');
-        console.log('ccccc' + drawnID);
+        document.getElementById('winnerInfo').innerHTML = "Rozgrywka w toku";
+
+
         startHoverSimulation = setInterval(simulateHover, 1100);
         simulateHover();
     });
+
+
+
+
 })();

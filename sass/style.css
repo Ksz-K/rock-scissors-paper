@@ -145,6 +145,18 @@ body {
   height: 50%;
 }
 
+.board {
+  margin-top: 1rem;
+}
+
+.board img {
+  min-height: 100px;
+}
+
+#winnerInfo {
+  color: #1717b6;
+}
+
 [class*="info"] {
   height: 15vh;
   overflow: hidden;
