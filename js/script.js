@@ -188,15 +188,14 @@
 
     }
 
-    document.getElementById('r_man').addEventListener('click', function () {
-        whoWin(1);
-    })
-    document.getElementById('p_man').addEventListener('click', function () {
-        whoWin(2);
-    })
-    document.getElementById('s_man').addEventListener('click', function () {
-        whoWin(3);
-    })
+    var r_man = function () { whoWin(1) };
+    var p_man = function () { whoWin(2) };
+    var s_man = function () { whoWin(3) };
+
+    document.getElementById('r_man').addEventListener('click', r_man);
+    document.getElementById('p_man').addEventListener('click', p_man);
+    document.getElementById('s_man').addEventListener('click', s_man);
+
 
     document.getElementById('reStart').addEventListener('click', function () {
         location.reload();
