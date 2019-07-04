@@ -122,6 +122,7 @@
     }
 
     function whoWin(manChoice) {
+        silentPlayCards();
         switch (true) {
             case manChoice == 1 && drawn == 1:
                 markChoices();
@@ -204,11 +205,18 @@
         document.getElementById('s_man').addEventListener('click', s_man);
     }
 
+    function silentPlayCards() {
+        document.getElementById('r_man').removeEventListener('click', r_man);
+        document.getElementById('p_man').removeEventListener('click', p_man);
+        document.getElementById('s_man').removeEventListener('click', s_man);
+    }
+
     document.getElementById('reStart').addEventListener('click', function () {
         location.reload();
     });
 
     document.getElementById('continue').addEventListener('click', function () {
+        initializePlayCards();
         playNumber++;
         if (playNumber > maxPlayToGame) {
             if (manPoints <= iaPoints) { takeCare = "Następnym razem będzie lepiej :)" }
