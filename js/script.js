@@ -13,10 +13,18 @@
     var manWonSeries = 0;
     var iaWonSeries = 0;
     var deuceSeries = 0;
+    var r_man = function () { whoWin(1) };
+    var p_man = function () { whoWin(2) };
+    var s_man = function () { whoWin(3) };
     var takeCare = "Brawo. U won !";
 
 
     var maxPlays = parseFloat(window.prompt("Czy chesz ustalić maksymalną ilość rozgrywek ? \nJeśli tak wpisz ją - jeśli nie wpisz cokolwiek bądź kliknij anuluj."));
+
+    var startHoverSimulation = setInterval(simulateHover, 1100);
+    simulateHover();
+    initializePlayCards()
+
 
     if (!isNaN(maxPlays)) {
         maxPlayToGame = maxPlays;
@@ -55,8 +63,9 @@
             document.getElementById(drawnID).classList.remove('hover_simulation');
         }
     }
-    var startHoverSimulation = setInterval(simulateHover, 1100);
-    simulateHover();
+
+
+
 
     function markChoices() {
         clearInterval(startHoverSimulation);
@@ -188,14 +197,12 @@
 
     }
 
-    var r_man = function () { whoWin(1) };
-    var p_man = function () { whoWin(2) };
-    var s_man = function () { whoWin(3) };
 
-    document.getElementById('r_man').addEventListener('click', r_man);
-    document.getElementById('p_man').addEventListener('click', p_man);
-    document.getElementById('s_man').addEventListener('click', s_man);
-
+    function initializePlayCards() {
+        document.getElementById('r_man').addEventListener('click', r_man);
+        document.getElementById('p_man').addEventListener('click', p_man);
+        document.getElementById('s_man').addEventListener('click', s_man);
+    }
 
     document.getElementById('reStart').addEventListener('click', function () {
         location.reload();
