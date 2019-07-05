@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 (function () {
     var playNumber = 1;
     var draw;
@@ -24,9 +24,7 @@
 
     var maxPlays = parseFloat(window.prompt("Czy chesz ustalić maksymalną ilość rozgrywek ? \nJeśli tak wpisz ją - jeśli nie wpisz cokolwiek bądź kliknij anuluj."));
 
-    var startHoverSimulation = setInterval(simulateHover, 1000);
-    simulateHover();
-    initializePlayCards()
+
 
 
     if (!isNaN(maxPlays)) {
@@ -43,7 +41,7 @@
 
     function checkHoverSimulation() {
 
-        if (document.querySelector(`#${drawnID}`).classList.contains('hover_simulation')) {
+        if (document.querySelector('#' + drawnID).classList.contains('hover_simulation')) {
             document.getElementById(drawnID).classList.remove('hover_simulation')
         } else {
             document.getElementById(drawnID).classList.add('hover_simulation');
@@ -56,16 +54,16 @@
 
     function simulateHover() {
         computerPlay();
-        if (drawn == 1) {
+        if (drawn === 1) {
             drawnID = "r_ia";
-        } else if (drawn == 2) {
+        } else if (drawn === 2) {
             drawnID = "p_ia";
         } else {
             drawnID = "s_ia";
         };
 
         checkHoverSimulation();
-        setTimeout(function () { document.getElementById(drawnID).classList.remove('hover_simulation'); }, 900);
+        setTimeout(removeHoverSimulation, 900);
 
         ;
     }
@@ -76,9 +74,9 @@
     function markChoices() {
         clearInterval(startHoverSimulation);
 
-        if (draw == 1) {
+        if (draw === 1) {
             drawID = "r_ia";
-        } else if (draw == 2) {
+        } else if (draw === 2) {
             drawID = "p_ia";
         } else {
             drawID = "s_ia";
@@ -108,17 +106,17 @@
         for (let i = 0; i <= sequanceOfResult.length; i++) {
             if (i < sequanceOfResult.length) {
 
-                if (sequanceOfResult[i] == 'man') {
+                if (sequanceOfResult[i] === 'man') {
                     manWon++;
                     if (manWon > manWonSeries) { manWonSeries = manWon; }
                 } else { manWon = 0; }
 
-                if (sequanceOfResult[i] == 'ia') {
+                if (sequanceOfResult[i] === 'ia') {
                     iaWon++;
                     if (iaWon > iaWonSeries) { iaWonSeries = iaWon; }
                 } else { iaWon = 0; }
 
-                if (sequanceOfResult[i] == 'deuce') {
+                if (sequanceOfResult[i] === 'deuce') {
                     deuce++;
                     if (deuce > deuceSeries) { deuceSeries = deuce; }
                 } else { deuce = 0; }
@@ -140,28 +138,28 @@
     function whoWin(manChoice) {
         silentPlayCards();
         switch (true) {
-            case manChoice == 1 && draw == 1:
+            case manChoice === 1 && draw === 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/rr.jpg";
                 sequanceOfResult.push('deuce');
                 break;
 
-            case manChoice == 2 && draw == 2:
+            case manChoice === 2 && draw === 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/pp.jpg";
                 sequanceOfResult.push('deuce');
                 break;
 
-            case manChoice == 3 && draw == 3:
+            case manChoice === 3 && draw === 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/ss.jpg";
                 sequanceOfResult.push('deuce');
                 break;
 
-            case manChoice == 1 && draw == 2:
+            case manChoice === 1 && draw === 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/rp.jpg";
@@ -169,7 +167,7 @@
                 sequanceOfResult.push('ia');
                 break;
 
-            case manChoice == 1 && draw == 3:
+            case manChoice === 1 && draw === 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/rs.jpg";
@@ -177,7 +175,7 @@
                 sequanceOfResult.push('man');
                 break;
 
-            case manChoice == 2 && draw == 1:
+            case manChoice === 2 && draw === 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/pr.jpg";
@@ -185,7 +183,7 @@
                 sequanceOfResult.push('man');
                 break;
 
-            case manChoice == 2 && draw == 3:
+            case manChoice === 2 && draw === 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/ps.jpg";
@@ -193,7 +191,7 @@
                 sequanceOfResult.push('ia');
                 break;
 
-            case manChoice == 3 && draw == 1:
+            case manChoice === 3 && draw === 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/sr.jpg";
@@ -201,7 +199,7 @@
                 sequanceOfResult.push('ia');
                 break;
 
-            case manChoice == 3 && draw == 2:
+            case manChoice === 3 && draw === 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/sp.jpg";
@@ -257,5 +255,7 @@
         location.reload();
     }
 
-
+    var startHoverSimulation = setInterval(simulateHover, 1000);
+    simulateHover();
+    initializePlayCards()
 })();
