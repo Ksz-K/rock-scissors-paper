@@ -1,4 +1,4 @@
-//"use strict";
+"use strict";
 (function () {
     var playNumber = 1;
     var draw;
