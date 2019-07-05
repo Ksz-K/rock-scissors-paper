@@ -24,7 +24,7 @@
 
     var maxPlays = parseFloat(window.prompt("Czy chesz ustalić maksymalną ilość rozgrywek ? \nJeśli tak wpisz ją - jeśli nie wpisz cokolwiek bądź kliknij anuluj."));
 
-    var startHoverSimulation = setInterval(simulateHover, 1100);
+    var startHoverSimulation = setInterval(simulateHover, 1000);
     simulateHover();
     initializePlayCards()
 
@@ -35,21 +35,26 @@
         maxPlayToGame = 999999;
     }
 
-    function resolveAfter1Seconds(x) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(x);
-            }, 1000);
-        });
-    }
-
     function computerPlay() {
         draw = Math.floor((Math.random() * 3) + 1);
         sequanceOfDrawn.push(draw);
         drawn = sequanceOfDrawn[sequanceOfDrawn.length - 2];
     }
 
-    async function simulateHover() {
+    function checkHoverSimulation() {
+
+        if (document.querySelector(`#${drawnID}`).classList.contains('hover_simulation')) {
+            document.getElementById(drawnID).classList.remove('hover_simulation')
+        } else {
+            document.getElementById(drawnID).classList.add('hover_simulation');
+        }
+    }
+
+    function removeHoverSimulation() {
+        document.getElementById(drawnID).classList.remove('hover_simulation');
+    }
+
+    function simulateHover() {
         computerPlay();
         if (drawn == 1) {
             drawnID = "r_ia";
@@ -59,13 +64,10 @@
             drawnID = "s_ia";
         };
 
-        if (document.querySelector(`#${drawnID}`).classList.contains('hover_simulation')) {
-            document.getElementById(drawnID).classList.remove('hover_simulation')
-        } else {
-            document.getElementById(drawnID).classList.add('hover_simulation');
-            await resolveAfter1Seconds(1);
-            document.getElementById(drawnID).classList.remove('hover_simulation');
-        }
+        checkHoverSimulation();
+        setTimeout(function () { document.getElementById(drawnID).classList.remove('hover_simulation'); }, 900);
+
+        ;
     }
 
 
@@ -246,7 +248,7 @@
         document.getElementById('playNumber').innerHTML = `Rozgrywka numer: ${playNumber}`;
         document.getElementById(drawID).classList.remove('choosen');
         document.getElementById('winnerInfo').innerHTML = "Rozgrywka w toku";
-        startHoverSimulation = setInterval(simulateHover, 1100);
+        startHoverSimulation = setInterval(simulateHover, 1000);
         simulateHover();
     });
 
