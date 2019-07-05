@@ -1,8 +1,10 @@
+"use strict";
 (function () {
     var playNumber = 1;
     var draw;
     var drawn;
     var drawnID = "";
+    var drawID = "";
     var sequanceOfDrawn = [1];
     var sequanceOfResult = [];
     var manPoints = 0;
@@ -13,6 +15,7 @@
     var manWonSeries = 0;
     var iaWonSeries = 0;
     var deuceSeries = 0;
+    var maxPlayToGame;
     var r_man = function () { whoWin(1) };
     var p_man = function () { whoWin(2) };
     var s_man = function () { whoWin(3) };
@@ -45,6 +48,7 @@
         sequanceOfDrawn.push(draw);
         drawn = sequanceOfDrawn[sequanceOfDrawn.length - 2];
     }
+
     async function simulateHover() {
         computerPlay();
         if (drawn == 1) {
@@ -69,13 +73,23 @@
 
     function markChoices() {
         clearInterval(startHoverSimulation);
-        if (document.querySelector(`#${drawnID}`).classList.contains('hover_simulation')) {
-            document.getElementById(drawnID).classList.remove('hover_simulation')
-            document.getElementById(drawnID).classList.add('choosen')
+
+        if (draw == 1) {
+            drawID = "r_ia";
+        } else if (draw == 2) {
+            drawID = "p_ia";
         } else {
-            document.getElementById(drawnID).classList.add('choosen')
+            drawID = "s_ia";
+        };
+
+        if (document.querySelector(`#${drawID}`).classList.contains('hover_simulation')) {
+            document.getElementById(drawID).classList.remove('hover_simulation')
+            document.getElementById(drawID).classList.add('choosen')
+        } else {
+            document.getElementById(drawID).classList.add('choosen')
         }
     }
+
     function setupBoardgameInfo() {
 
         var manPointPoints;
@@ -124,28 +138,28 @@
     function whoWin(manChoice) {
         silentPlayCards();
         switch (true) {
-            case manChoice == 1 && drawn == 1:
+            case manChoice == 1 && draw == 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/rr.jpg";
                 sequanceOfResult.push('deuce');
                 break;
 
-            case manChoice == 2 && drawn == 2:
+            case manChoice == 2 && draw == 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/pp.jpg";
                 sequanceOfResult.push('deuce');
                 break;
 
-            case manChoice == 3 && drawn == 3:
+            case manChoice == 3 && draw == 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "REMIS";
                 document.getElementById('resultPicture').src = "images/ss.jpg";
                 sequanceOfResult.push('deuce');
                 break;
 
-            case manChoice == 1 && drawn == 2:
+            case manChoice == 1 && draw == 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/rp.jpg";
@@ -153,7 +167,7 @@
                 sequanceOfResult.push('ia');
                 break;
 
-            case manChoice == 1 && drawn == 3:
+            case manChoice == 1 && draw == 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/rs.jpg";
@@ -161,7 +175,7 @@
                 sequanceOfResult.push('man');
                 break;
 
-            case manChoice == 2 && drawn == 1:
+            case manChoice == 2 && draw == 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/pr.jpg";
@@ -169,7 +183,7 @@
                 sequanceOfResult.push('man');
                 break;
 
-            case manChoice == 2 && drawn == 3:
+            case manChoice == 2 && draw == 3:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/ps.jpg";
@@ -177,7 +191,7 @@
                 sequanceOfResult.push('ia');
                 break;
 
-            case manChoice == 3 && drawn == 1:
+            case manChoice == 3 && draw == 1:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "Computer WON !!!";
                 document.getElementById('resultPicture').src = "images/sr.jpg";
@@ -185,7 +199,7 @@
                 sequanceOfResult.push('ia');
                 break;
 
-            case manChoice == 3 && drawn == 2:
+            case manChoice == 3 && draw == 2:
                 markChoices();
                 document.getElementById('winnerInfo').innerHTML = "You WON !!!";
                 document.getElementById('resultPicture').src = "images/sp.jpg";
@@ -206,6 +220,7 @@
         document.getElementById('r_man').classList.add('manCard');
         document.getElementById('p_man').classList.add('manCard');
         document.getElementById('s_man').classList.add('manCard');
+
     }
 
     function silentPlayCards() {
@@ -229,7 +244,7 @@
             gameEnd();
         }
         document.getElementById('playNumber').innerHTML = `Rozgrywka numer: ${playNumber}`;
-        document.getElementById(drawnID).classList.remove('choosen');
+        document.getElementById(drawID).classList.remove('choosen');
         document.getElementById('winnerInfo').innerHTML = "Rozgrywka w toku";
         startHoverSimulation = setInterval(simulateHover, 1100);
         simulateHover();
