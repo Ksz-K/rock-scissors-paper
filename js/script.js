@@ -24,9 +24,6 @@
 
     var maxPlays = parseFloat(window.prompt("Czy chesz ustalić maksymalną ilość rozgrywek ? \nJeśli tak wpisz ją - jeśli nie wpisz cokolwiek bądź kliknij anuluj."));
 
-
-
-
     if (!isNaN(maxPlays)) {
         maxPlayToGame = maxPlays;
     } else {
