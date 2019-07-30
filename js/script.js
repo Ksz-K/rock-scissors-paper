@@ -36,33 +36,33 @@
         drawn = sequanceOfDrawn[sequanceOfDrawn.length - 2];
     }
 
-    function checkHoverSimulation() {
-
-        if (document.querySelector('#' + drawnID).classList.contains('hover_simulation')) {
-            document.getElementById(drawnID).classList.remove('hover_simulation')
-        } else {
-            document.getElementById(drawnID).classList.add('hover_simulation');
-        }
+    function resolveAfter1Seconds(x) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve(x);
+            }, 888);
+        });
     }
 
-    function removeHoverSimulation() {
-        document.getElementById(drawnID).classList.remove('hover_simulation');
-    }
 
-    function simulateHover() {
+
+    async function simulateHover() {
         computerPlay();
-        if (drawn === 1) {
+        if (drawn == 1) {
             drawnID = "r_ia";
-        } else if (drawn === 2) {
+        } else if (drawn == 2) {
             drawnID = "p_ia";
         } else {
             drawnID = "s_ia";
         };
 
-        checkHoverSimulation();
-        setTimeout(removeHoverSimulation, 900);
-
-        ;
+        if (document.querySelector(`#${drawnID}`).classList.contains('hover_simulation')) {
+            document.getElementById(drawnID).classList.remove('hover_simulation')
+        } else {
+            document.getElementById(drawnID).classList.add('hover_simulation');
+            await resolveAfter1Seconds(1);
+            document.getElementById(drawnID).classList.remove('hover_simulation');
+        }
     }
 
 
