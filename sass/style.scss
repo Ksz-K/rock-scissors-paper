@@ -334,13 +334,13 @@ table {
   font-weight: 400;
   font-style: normal;
 }
-.gameTable.green {
+.gameTable > .green {
   font-weight: 700;
   font-style: bold;
   color: #0f0;
 }
 
-.gameTable.red {
+.gameTable > .red {
   font-weight: 700;
   font-style: italic;
   color: #f00;

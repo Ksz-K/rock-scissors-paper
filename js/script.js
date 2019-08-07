@@ -339,7 +339,6 @@ Code below creates SINGLE ROW table with PlayHistory - all the movements of play
 */
 
     var table = document.getElementById("reviewGame");
-    console.log(playHistory.length);
 
     for (let val of playHistory) {
       var row = table.insertRow();
@@ -351,6 +350,17 @@ Code below creates SINGLE ROW table with PlayHistory - all the movements of play
       cell2.innerHTML = val.manMove;
       cell3.innerHTML = val.iaMove;
       cell4.innerHTML = val.score;
+    }
+
+    var zzz = document.getElementsByTagName("td");
+    for (let ij = 0; ij < zzz.length; ij += 1) {
+      let selected = zzz[ij];
+      console.log(zzz);
+      selected.innerText == "man"
+        ? selected.parentElement.classList.add("green")
+        : selected.innerText == "ia"
+        ? selected.parentElement.classList.add("red")
+        : "";
     }
   }
 
