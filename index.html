@@ -96,11 +96,45 @@
                 </div>
             </div>
         </div>
+
+        <div class="overlay" id="modal-overlay">
+            <div class="modal show" id="modal-one">
+                <a href="#" class="close">x</a>
+                <header>Podsumowanie przebiegu gry</header>
+                <div class="content" id="scoreBoard">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="gameTable">Numer rozgrywki</th>
+                                <th class="gameTable">Twój Ruch (man)</th>
+                                <th class="gameTable">Ruch maszyny (ia)</th>
+                                <th class="gameTable">Kto wygrał?</th>
+                            </tr>
+                        </thead>
+                        <!--
+                        <tr>
+                            <td class="gameTable" id="playCircle"></td>
+                            <td class="gameTable" id="manMove"></td>
+                            <td class="gameTable" id="iaMove"></td>
+                            <td class="gameTable" id="winner"></td>
+                        </tr>
+                    -->
+                        <tbody id="reviewGame" class="gameTable">
+
+                        </tbody>
+                    </table>
+                </div>
+                <footer>
+                    <button class="buttons" id="reStartGame">Re-start the game</button>
+                </footer>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer">&copy; 2019 </div>
+        </footer>
+        <script src="js/script.js"></script>
     </main>
-    <footer>
-        <div class="footer">&copy; 2019 </div>
-    </footer>
-    <script src="js/script.js"></script>
 </body>
 
 
