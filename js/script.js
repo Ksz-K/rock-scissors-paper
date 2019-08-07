@@ -30,7 +30,7 @@
 
   var maxPlays = parseFloat(
     window.prompt(
-      "Czy chesz ustalić ilość rozgrywek ? \nJeśli tak wpisz ją - jeśli nie wpisz cokolwiek i włącz Training Mode4."
+      "Czy chesz ustalić ilość rozgrywek ? \nJeśli tak wpisz ją - jeśli nie wpisz cokolwiek i włącz Training Mode."
     )
   );
 
@@ -55,6 +55,9 @@
   }
 
   async function simulateHover() {
+    document
+      .getElementById("continue")
+      .removeEventListener("click", initializeContinue);
     computerPlay();
     if (drawn == 1) {
       drawnID = "r_ia";
@@ -168,7 +171,7 @@
     ).innerHTML = `Computer:${iaPoints} ${iaPointPoints}`;
   }
 
-  function recordHistory(manChoice, draw) {
+  function recordHistory(manChoice, draw, manPoints, iaPoints) {
     manChoice === 1
       ? (manChoice = "Rock")
       : manChoice === 2
@@ -184,11 +187,15 @@
     playHistory.push({
       manMove: manChoice,
       iaMove: draw,
-      score: sequanceOfResult[sequanceOfResult.length - 1]
+      score: sequanceOfResult[sequanceOfResult.length - 1],
+      scoreNow: `${manPoints} : ${iaPoints}`
     });
   }
   function whoWin(manChoice) {
     silentPlayCards();
+    document
+      .getElementById("continue")
+      .addEventListener("click", initializeContinue);
 
     switch (true) {
       case manChoice === 1 && draw === 1:
@@ -260,7 +267,7 @@
         sequanceOfResult.push("man");
         break;
     }
-    recordHistory(manChoice, draw);
+    recordHistory(manChoice, draw, manPoints, iaPoints);
     setupBoardgameInfo();
   }
 
@@ -280,7 +287,7 @@
     location.reload();
   });
 
-  document.getElementById("continue").addEventListener("click", function() {
+  function initializeContinue() {
     initializePlayCards();
     playNumber += 1;
     if (playNumber > maxPlayToGame) {
@@ -293,7 +300,7 @@
     document.getElementById("winnerInfo").innerHTML = "Rozgrywka w toku";
     startHoverSimulation = setInterval(simulateHover, 1000);
     simulateHover();
-  });
+  }
 
   function showModal() {
     document.getElementById("modal-overlay").classList.add("show");
@@ -346,16 +353,18 @@ Code below creates SINGLE ROW table with PlayHistory - all the movements of play
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);
       var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
       cell1.innerHTML = playHistory.indexOf(val) + 1;
       cell2.innerHTML = val.manMove;
       cell3.innerHTML = val.iaMove;
       cell4.innerHTML = val.score;
+      cell5.innerHTML = val.scoreNow;
     }
 
-    var zzz = document.getElementsByTagName("td");
-    for (let ij = 0; ij < zzz.length; ij += 1) {
-      let selected = zzz[ij];
-      console.log(zzz);
+    var createTD = document.getElementsByTagName("td");
+    for (let ij = 0; ij < createTD.length; ij += 1) {
+      let selected = createTD[ij];
+
       selected.innerText == "man"
         ? selected.parentElement.classList.add("green")
         : selected.innerText == "ia"
