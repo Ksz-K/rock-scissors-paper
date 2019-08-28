@@ -1,23 +1,28 @@
 "use strict";
 (function() {
-  var playNumber = 1;
-  var draw;
-  var drawn;
-  var drawnID = "";
-  var drawID = "";
-  var sequanceOfDrawn = [1];
-  var sequanceOfResult = [];
-  var manPoints = 0;
-  var iaPoints = 0;
-  var manWon = 0;
-  var iaWon = 0;
-  var deuce = 0;
-  var manWonSeries = 0;
-  var iaWonSeries = 0;
-  var deuceSeries = 0;
-  var maxPlayToGame;
-  var farewall = "";
-  var playHistory = [];
+  var params = {};
+
+  var {
+    playNumber = 1,
+    draw,
+    drawn,
+    drawnID = "",
+    drawID = "",
+    sequanceOfDrawn = [1],
+    sequanceOfResult = [],
+    manPoints = 0,
+    iaPoints = 0,
+    manWon = 0,
+    iaWon = 0,
+    deuce = 0,
+    manWonSeries = 0,
+    iaWonSeries = 0,
+    deuceSeries = 0,
+    maxPlayToGame,
+    farewall = "",
+    playHistory = []
+  } = params;
+
   var r_man = function() {
     whoWin(1);
   };
