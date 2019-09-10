@@ -123,40 +123,19 @@
       iaPointPoints = "Point";
     }
 
-    for (let i = 0; i <= sequanceOfResult.length; i++) {
-      if (i < sequanceOfResult.length) {
-        if (sequanceOfResult[i] === "man") {
-          manWon++;
-          if (manWon > manWonSeries) {
-            manWonSeries = manWon;
-          }
-        } else {
-          manWon = 0;
-        }
-
-        if (sequanceOfResult[i] === "ia") {
-          iaWon++;
-          if (iaWon > iaWonSeries) {
-            iaWonSeries = iaWon;
-          }
-        } else {
-          iaWon = 0;
-        }
-
-        if (sequanceOfResult[i] === "deuce") {
-          deuce++;
-          if (deuce > deuceSeries) {
-            deuceSeries = deuce;
-          }
-        } else {
-          deuce = 0;
-        }
-      } else {
-        manWon = 0;
-        iaWon = 0;
-        deuce = 0;
-      }
+    for (let val of sequanceOfResult) {
+      val === "man"
+        ? (manWon++, (iaWon = 0), (deuce = 0))
+        : val === "ia"
+        ? (iaWon++, (manWon = 0), (deuce = 0))
+        : (deuce++, (manWon = 0), (iaWon = 0));
+      manWon > manWonSeries ? (manWonSeries = manWon) : "";
+      iaWon > iaWonSeries ? (iaWonSeries = iaWon) : "";
+      deuce > deuceSeries ? (deuceSeries = deuce) : "";
     }
+    manWon = 0;
+    iaWon = 0;
+    deuce = 0;
 
     document.getElementById(
       "manWonSeries"
